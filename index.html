@@ -3,23 +3,82 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat">
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Raleway">
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
   </head>
   <body>
     <script>
-    //Jared begins work
+    
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        $body.html("<div id='container'><div id='twitFrame'><h1 id='twitTitle'></h1><h2 id='twitAuthor'></h2><div id='addTwitTweets'></div><div id='twitFeed'></div></div><div id='userFrame'><h1 id='userTitle'></h1><h2 id='userAuthor'></h2><div id='addUserTweets'></div><div id='userFeed'></div></div></div>");
+        
+        function stylePage() {
+        	$body.css({"font-family": "Open Sans", "font-size": "1em", "background-color": "#C2F1FF", "padding": "20px 180px 20px 180px"});
+        	$("#container").css({ "display": "inline"});
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
+        	//Main Twittler Feed
+        	$("#twitFrame").css({"border-radius": "10px", "width": "50%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "left", "margin-left": "auto", "margin-right": "auto"});
+			$("#twitFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#EDEDED", "padding": "0 0 15px 0"});
+        	$("#twitTitle").text("Twittler Main Feed").css({"font-family": "Montserrat", "font-size": "2.3em", "text-align": "center", "padding": "2px", "margin-top": "8px"});
+        	$("#twitAuthor").text("by Jared Scheib").css({"font-family": "Montserrat", "font-size": "1em", "text-align": "center", "margin": "-20px 0 8px 0"});
+			$("#addTwitTweets").html("<a href='#' id='addLink'>See Latest Tweets</a>");
+        	$("#addTwitTweets").css({"border": "1px solid black", "border-radius": "5px", "text-align": "center", "background-color": "#EDEDED", "width": "100%", "font-size": "0.8em"})
+
+        	//User Profile Feed
+        	$("#userFrame").css({"border-radius": "10px", "width": "50%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "right", "margin-left": "auto", "margin-right": "auto"});
+        	$("#userFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0"});
+        	$("#userTitle").text("User Feed").css({"font-family": "Montserrat", "font-size": "2.3em", "text-align": "center", "padding": "2px", "margin-top": "8px"});
+        	$("#userAuthor").text("@(username)").css({"font-family": "Montserrat", "font-size": "1em", "text-align": "center", "margin": "-20px 0 8px 0"});
+			$("#addUserTweets").html("<a href='#' id='addLink'>See Latest Tweets</a>");
+        	$("#addUserTweets").css({"border": "1px solid black", "border-radius": "5px", "text-align": "center", "background-color": "#EDEDED", "width": "100%", "font-size": "0.8em"})
+
+        	//General Styling
+        	//$(".handle").css({"font-family": "Raleway"});
         }
 
+        function displayTwitTweets() {
+	        var index = streams.home.length - 1;
+	        while(index >= 0){
+	          var tweet = streams.home[index];
+	          var $tweet = $("<div class='tweet'></div>");
+	          $tweet.html("<a href='#" + tweet.user + "' id='userLink'>" + '@' + tweet.user + "</a>");
+	          $tweet.append("<br>" + tweet.message)
+	          $tweet.append("<br>" + tweet.created_at);
+	          $tweet.appendTo("#twitFeed");
+	          prettifyTweet($tweet);
+	          index -= 1;
+	        }
+	    }
+
+	    function removeTweets() {
+	    	var displayed = $("#twitFeed").children().length;
+	    	console.log("displayed: " + displayed, "stream: " + streams.home.length);
+	    	for (var i = 0; i < displayed; i++) {
+	    		$(".tweet").first().remove();
+	    	}
+	    }
+
+	    function prettifyTweet(item) {
+	    	item.css({"background-color": "white", "padding": "4px"});
+	    	item.append("<hr>");
+	    	//item.addClass("handle");
+	    }
+
+    	$("#addTwitTweets").on("click", function(event) {
+    		event.preventDefault();
+    		$(this).animate({opacity: "0.25"}, 100, function() {
+    			$(this).animate({opacity: "1"}, 100);
+    		});
+    		removeTweets();
+    		displayTwitTweets();
+			//window.scrollTo(0, document.body.scrollHeight);
+    	});
+
+	    stylePage();
+    	displayTwitTweets();
       });
 
     </script>
