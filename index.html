@@ -12,11 +12,13 @@
     <script>
     
       $(document).ready(function(){
+        var currentUser = "shawndrost";
+
         var $body = $('body');
         $body.html("<div id='container'><div id='twitFrame'><h1 id='twitTitle'></h1><h2 id='twitAuthor'></h2><div id='addTwitTweets' data-id='twit'></div><div id='twitFeed'></div></div><div id='userFrame'><h1 id='userTitle'></h1><h2 id='userAuthor'></h2><div id='addUserTweets' data-id='user'></div><div id='userFeed'></div></div></div>");
         
         function stylePage() {
-        	$body.css({"font-family": "Open Sans", "font-size": "1em", "background-color": "#C2F1FF", "padding": "20px 150px 20px 150px"});
+        	$body.css({"font-family": "Open Sans", "font-size": "1em", "background-color": "#C8EEFA", "padding": "20px 150px 20px 150px"});
         	$("#container").css({"display": "inline"});
 
         	//Main Twittler Feed
@@ -79,10 +81,21 @@
     			$parentDiv.animate({opacity: "1"}, 50);
     		});
 
+    		var stream = $parentDiv.attr("data-id") === "twit" ? streams.home : streams.users[currentUser];
     		//console.log($parentDiv.attr("data-id") === "twit");
-    		removeTweets($parentDiv.attr("data-id") === "twit" ? streams.home : streams.users["shawndrost"]);
-    		displayTweets($parentDiv.attr("data-id") === "twit" ? streams.home : streams.users["shawndrost"]);
+    		removeTweets(stream);
+    		displayTweets(stream);
 			//window.scrollTo(0, document.body.scrollHeight);
+    	});
+
+    	$("div").on("click", ".userHandle", function(event) {
+    		event.preventDefault();
+    		currentUser = $(this).text().slice(1);
+			$("#userAuthor").text("@" + currentUser);
+
+    		var stream = streams.users[currentUser];
+    		removeTweets(stream);
+    		displayTweets(stream);
     	});
 
 	    stylePage();
