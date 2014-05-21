@@ -20,20 +20,23 @@
         	$("#container").css({"display": "inline"});
 
         	//Main Twittler Feed
-        	$("#twitFrame").css({"border-radius": "10px", "width": "45%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "left", "margin-left": "auto", "margin-right": "auto"});
-			$("#twitFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#EDEDED", "padding": "0 0 15px 0"});
+        	$("#twitFrame").css({"border-radius": "10px", "width": "45%", "background-color": "#FFFFFF", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "left", "margin-left": "auto", "margin-right": "auto"});
+			$("#twitFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#FFFFFF", "padding": "0 0 15px 0"});
         	$("#twitTitle").text("Twittler Main Feed").css({"font-family": "Montserrat", "font-size": "2.3em", "text-align": "center", "padding": "2px", "margin-top": "8px"});
         	$("#twitAuthor").text("by Jared Scheib").css({"font-family": "Montserrat", "font-size": "1em", "text-align": "center", "margin": "-20px 0 8px 0"});
 			$("#addTwitTweets").html("<a href='#' class='addFeed'>See Latest Tweets</a>");
-        	$("#addTwitTweets").css({"border": "1px solid black", "border-radius": "5px", "text-align": "center", "background-color": "#EDEDED", "width": "100%", "font-size": "0.8em"})
+        	$("#addTwitTweets").css({"border": "1px solid #F0F0F0", "border-radius": "5px", "text-align": "center", "background-color": "#FAFEFF", "width": "100%", "font-size": "0.8em"})
 
         	//User Profile Feed
-        	$("#userFrame").css({"border-radius": "10px", "width": "45%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "right", "margin-left": "auto", "margin-right": "auto"});
-        	$("#userFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#EDEDED", "padding": "0 0 15px 0", "margin": "20px 0 0 0"});
+        	$("#userFrame").css({"border-radius": "10px", "width": "45%", "background-color": "#FFFFFF", "padding": "0 0 15px 0", "margin": "20px 0 0 0", "float": "right", "margin-left": "auto", "margin-right": "auto"});
+        	$("#userFeed").css({"border-radius": "10px", "width": "100%", "background-color": "#FFFFFF", "padding": "0 0 15px 0", "margin": "20px 0 0 0"});
         	$("#userTitle").text("User Feed").css({"font-family": "Montserrat", "font-size": "2.3em", "text-align": "center", "padding": "2px", "margin-top": "8px"});
         	$("#userAuthor").text("@(username)").css({"font-family": "Montserrat", "font-size": "1em", "text-align": "center", "margin": "-20px 0 8px 0"});
 			$("#addUserTweets").html("<a href='#' class='addFeed'>See Latest Tweets</a>");
-        	$("#addUserTweets").css({"border": "1px solid black", "border-radius": "5px", "text-align": "center", "background-color": "#EDEDED", "width": "100%", "font-size": "0.8em"})
+        	$("#addUserTweets").css({"border": "1px solid #F0F0F0", "border-radius": "5px", "text-align": "center", "background-color": "#FAFEFF", "width": "100%", "font-size": "0.8em"})
+
+        	//General Styling
+        	$("a").css({"text-decoration": "none"});
         }
 
         function displayTweets(feed) {
@@ -43,8 +46,8 @@
 	          var tweet = feed[index];
 	          var $tweet = $("<div class='tweet'></div>");
 	          $tweet.html("<a href='#" + tweet.user + "' class='userHandle'>" + '@' + tweet.user + "</a>");
-	          $tweet.append("<br>" + tweet.message)
-	          $tweet.append("<br>" + tweet.created_at);
+	          $tweet.append("<br><span class='message'>" + tweet.message + "</span>")
+	          $tweet.append("<br><span class='timestamp'>" + tweet.created_at + "</span>");
 	          $tweet.appendTo(targetFeed);
 	          prettifyTweet($tweet);
 	          index -= 1;
@@ -64,7 +67,9 @@
 	    	item.css({"background-color": "white", "padding": "4px"});
 	    	item.append("<hr>");
 	    	//item.addClass("handle");
-			$(".userHandle").css({"font-family": "Raleway"});
+			$(".userHandle").css({"font-family": "Lato", "font-weight": "700", "text-decoration": "none"});
+			$(".message").css({"font-family": "Lato", "font-weight": "400", "margin-left": "15px"});
+			$(".timestamp").css({"font-family": "Lato", "font-weight": "100", "font-size": "0.65em", "margin-left": "15px"});
 	    }
 
     	$("div").on("click", ".addFeed", function(event) {
